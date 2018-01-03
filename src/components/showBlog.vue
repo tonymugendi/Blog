@@ -1,9 +1,16 @@
 <template>
-  <div id="show-blogs" class="container">
+  <div v-theme="" id="show-blogs" class="container">
     <h1>All Blog Articles</h1>
-    <div v-for="blog in blogs" class="single-blog">
-      <h4>{{ blog.title }}</h4>
-      <article>{{ blog.body }}</article>
+    <div class="input-group mb-3">
+      <input type="text" v-model="search" class="form-control" placeholder="Search blogs"  >
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button">Search</button>
+      </div>
+    </div>
+
+    <div v-for="blog in filteredBlogs" class="single-blog">
+      <h4 v-rainbow>{{ blog.title | toUppercase}}</h4>
+      <article>{{ blog.body | snippet}}</article>
     </div>
   </div>
 </template>
@@ -14,7 +21,8 @@ export default {
   
   data() {
     return {
-      blogs: []
+      blogs: [],
+      search: ''
       
     }
   },
@@ -27,9 +35,67 @@ export default {
     this.$http.get('https://jsonplaceholder.typicode.com/posts').then(function(data){
       this.blogs = data.body.slice(0, 10);
     })
+  },
+
+  computed: {
+    filteredBlogs: function(){
+      return this.blogs.filter((blog) => {
+        return blog.title.match(this.search)
+
+      });
+    }
+  },
+
+  filters: {
+    toUppercase(value){
+      return value.toUpperCase();
+    },
+
+    snippet(value){
+      return value.slice(0,100) + '...';
+    }
+  },
+
+  directives: {
+    'rainbow': {
+      bind(el, binding, vnode){
+        el.style.color = "#" + Math.random().toString().slice(2,8);
+
+      }
+    }
   }
 }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style scoped>
 #show-blogs{
