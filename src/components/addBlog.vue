@@ -34,7 +34,7 @@
             </div>
           </div>
 
-          <label class="my-1 mr-2" >Preference</label>
+          <label class="my-1 mr-2" >Author</label>
           <select class="custom-select my-1 mr-sm-2" v-model="blog.author">
             <option v-for="author in authors">{{ author }}</option>
           </select>
@@ -82,11 +82,7 @@ export default {
 
   methods: {
     post: function() {
-      this.$http.post('https://vue-blog-76ff9.firebaseio.com/', {
-        title: this.blog.title,
-        body: this.blog.content,
-        userId: 1
-      }).then(function(data){
+      this.$http.post('https://vue-blog-76ff9.firebaseio.com/posts.json', this.blog).then(function(data){
         console.log(data);
         this.submitted = true;
         
