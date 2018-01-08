@@ -82,7 +82,7 @@ export default {
 
   methods: {
     post: function() {
-      this.$http.post('https://jsonplaceholder.typicode.com/posts', {
+      this.$http.post('https://vue-blog-76ff9.firebaseio.com/', {
         title: this.blog.title,
         body: this.blog.content,
         userId: 1

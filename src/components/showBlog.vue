@@ -1,5 +1,5 @@
 <template>
-  <div v-theme="" id="show-blogs" class="container">
+  <div  id="show-blogs" class="container">
     <h1>All Blog Articles</h1>
     <div class="input-group mb-3">
       <input type="text" v-model="search" class="form-control" placeholder="Search blogs"  >
@@ -9,7 +9,9 @@
     </div>
 
     <div v-for="blog in filteredBlogs" class="single-blog">
-      <h4 v-rainbow>{{ blog.title | toUppercase}}</h4>
+      <router-link v-bind:to="'/blog/' + blog.id">
+        <h4 v-rainbow>{{ blog.title | toUppercase}}</h4>
+      </router-link>
       <article>{{ blog.body | snippet}}</article>
     </div>
   </div>
